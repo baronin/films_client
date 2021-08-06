@@ -1,0 +1,13 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2020,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "rules": {
+      "no-unused-expressions": "off"
+    }
+  },
+  "extends": ["react-app"]
+}

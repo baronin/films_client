@@ -1,5 +1,5 @@
-const name = "Bill";
-typeof name === "strng";
+const firsName = "Bill";
+typeof firsName === "strng";
 
 if (!"serviceWorker" in navigator) {
   // you have an old browser
