@@ -34,6 +34,18 @@ const FilmCard = ({ film }) => {
   );
 };
 
+FilmCard.propTypes = {
+  film: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    director: PropTypes.string.isRequired,
+    img: PropTypes.string.isRequired,
+    duration: PropTypes.number.isRequired,
+    price: PropTypes.number.isRequired,
+    featured: PropTypes.bool.isRequired,
+  }),
+};
+
 FilmCard.defaultProps = {
   film: {},
 };

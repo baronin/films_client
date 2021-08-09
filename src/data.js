@@ -3,10 +3,9 @@ import { generate as id } from "shortid";
 const films = [
   {
     _id: id(),
-
     title: "Legend of the Seeker",
     director: "Stephen Tolkin",
-    duration: "93",
+    duration: 93,
     price: 48.3,
     img: "/img/seeker.jpg",
     featured: false,

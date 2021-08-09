@@ -12,7 +12,7 @@ const FilmsList = ({ films }) => {
 };
 
 FilmsList.propTypes = {
-  films: PropTypes.array.isRequired,
+  films: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 FilmsList.defaultProps = {
