@@ -32,4 +32,8 @@ const FilmCard = ({ film }) => {
   );
 };
 
+FilmCard.defaultProps = {
+  film: {},
+};
+
 export default FilmCard;
