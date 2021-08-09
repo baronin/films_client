@@ -1,9 +1,6 @@
 import { Component } from "react";
-import FilmCard from "pages/FilmsPage/components/FilmCard";
+import FilmsList from "pages/FilmsPage/components/FilmsList";
 import { films } from "data";
-
-import { ErrorBoundary } from "react-error-boundary";
-import ErrorFallback from "components/ErrorFallback";
 
 class App extends Component {
   state = {
@@ -20,13 +17,7 @@ class App extends Component {
     const { films } = this.state;
     return (
       <div className="ui container">
-        <ErrorBoundary
-          resetKeys={films}
-          onReset={this.onReset}
-          FallbackComponent={ErrorFallback}
-        >
-          <FilmCard film={films[0]} />
-        </ErrorBoundary>
+        <FilmsList films={films} />
       </div>
     );
   }

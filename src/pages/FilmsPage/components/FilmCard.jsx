@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 const FilmCard = ({ film }) => {
   return (
     <div className="ui card">
@@ -6,7 +8,7 @@ const FilmCard = ({ film }) => {
       </span>
       <div className="image">
         <span className="ui green label ribbon">$ {film.price} </span>
-        <img src="img/seeker.jpg" alt="" />
+        <img src={film.img} alt={film.title} />
       </div>
 
       <div className="content">
