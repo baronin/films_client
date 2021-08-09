@@ -17,7 +17,7 @@ class App extends Component {
     const { films } = this.state;
     return (
       <div className="ui container">
-        <FilmsList films={films} />
+        <FilmsList films={[]} />
       </div>
     );
   }
