@@ -1,11 +1,24 @@
+import { Component } from "react";
 import FilmCard from "pages/FilmsPage/components/FilmCard";
+import { films } from "data";
 
-const App = () => {
-  return (
-    <div className="ui container">
-      <FilmCard />
-    </div>
-  );
-};
+class App extends Component {
+  state = {
+    films: [],
+  };
+
+  componentDidMount() {
+    this.setState({ films });
+  }
+
+  render() {
+    const { films } = this.state;
+    return (
+      <div className="ui container">
+        <FilmCard film={films[0]} />
+      </div>
+    );
+  }
+}
 
 export default App;
