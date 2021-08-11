@@ -20,9 +20,18 @@ class FilmForm extends Component {
       data: { ...this.state.data, [e.target.name]: e.target.value },
     });
 
-  handleCheckboxChange = (e) => {};
+  handleCheckboxChange = (e) =>
+    this.setState({
+      data: { ...this.state.data, [e.target.name]: e.target.checked },
+    });
 
-  handleNumberChange = (e) => {};
+  handleNumberChange = (e) => {
+    let value = parseFloat(e.target.value);
+    value = isNaN(value) || value === 0 ? "" : Math.abs(value);
+    this.setState({
+      data: { ...this.state.data, [e.target.name]: value },
+    });
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
