@@ -14,7 +14,7 @@ const Message = ({ type, color, children }) => {
 Message.propTypes = {
   type: PropTypes.string.isRequired,
   color: PropTypes.string.isRequired,
-  children: PropTypes.oneOf([
+  children: PropTypes.oneOfType([
     PropTypes.node,
     PropTypes.arrayOf(PropTypes.node),
   ]),
