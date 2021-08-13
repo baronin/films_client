@@ -107,6 +107,7 @@
 Цвет текста сообщений передается через props type 
 который может иметь значения 
   error - #9a3f38 или  info -  "#6597a7"
+type="error" // info
 
 // --------------------------------------- HTML 
 <div style="color: #9a3f38">Message's text (error or success)</div>
