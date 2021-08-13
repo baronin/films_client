@@ -1,11 +1,10 @@
 import { Component } from "react";
 import { prop, sortWith, ascend, descend } from "ramda";
-import { generate as id } from "shortid";
 import FilmsList from "pages/FilmsPage/components/FilmsList";
-import { films } from "data";
 import FilmContext from "contexts/FilmContext";
 import FilmForm from "pages/FilmsPage/components/FilmForm";
 import TopNavigation from "components/TopNavigation";
+import api from "api";
 
 class App extends Component {
   state = {
@@ -20,7 +19,9 @@ class App extends Component {
     sortWith([descend(prop("featured")), ascend(prop("title"))], films);
 
   componentDidMount() {
-    this.setState({ films: this.sortFilms(films) });
+    api.films
+      .fetchAll()
+      .then((films) => this.setState({ films: this.sortFilms(films) }));
   }
 
   toggleFeatured = (id) =>
@@ -37,11 +38,13 @@ class App extends Component {
     });
 
   addFilm = (film) =>
-    this.setState(({ films, shoAddForm, selectedFilm }) => ({
-      films: this.sortFilms([...films, { _id: id(), ...film }]),
-      showAddForm: false,
-      selectedFilm: {},
-    }));
+    api.films.create(film).then((film) =>
+      this.setState(({ films, shoAddForm, selectedFilm }) => ({
+        films: this.sortFilms([...films, film]),
+        showAddForm: false,
+        selectedFilm: {},
+      }))
+    );
 
   updateFilm = (film) =>
     this.setState(({ films, showAddFilm, selectedFilm }) => ({
