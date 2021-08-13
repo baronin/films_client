@@ -1,25 +1,25 @@
-import React, { Component, createRef } from 'react';
-import ImageLoader from 'components/ImageLoader';
-import FormMessage from 'components/FormMessage';
-import { genres, tags } from 'data';
+import React, { Component, createRef } from "react";
+import ImageLoader from "components/ImageLoader";
+import FormMessage from "components/FormMessage";
+import { genres, tags } from "data";
 
 const initialData = {
-  title: '',
-  description: '',
-  director: '',
-  duration: '',
-  price: '',
-  img: '',
+  title: "",
+  description: "",
+  director: "",
+  duration: "",
+  price: "",
+  img: "",
   featured: false,
 };
 
 class FilmForm extends Component {
   state = {
     data: initialData,
-    photo: '',
+    photo: "",
     errors: {},
-    select: '',
-    genre: 'family',
+    select: "",
+    genre: "family",
     multiple: [],
   };
 
@@ -28,10 +28,10 @@ class FilmForm extends Component {
   updatePhoto = (e) => {
     const file = this.photoRef.current.files && this.photoRef.current.files[0];
     if (file) {
-      const img = '/img/' + file.name;
+      const img = "/img/" + file.name;
       this.setState({
         data: { ...this.state.data, img },
-        errors: { ...this.state.errors, img: '' },
+        errors: { ...this.state.errors, img: "" },
       });
     }
   };
@@ -39,7 +39,7 @@ class FilmForm extends Component {
   handleStringChange = (e) =>
     this.setState({
       data: { ...this.state.data, [e.target.name]: e.target.value },
-      errors: { ...this.state.errors, [e.target.name]: '' },
+      errors: { ...this.state.errors, [e.target.name]: "" },
     });
 
   handleCheckboxChange = (e) =>
@@ -49,24 +49,24 @@ class FilmForm extends Component {
 
   handleNumberChange = (e) => {
     let value = parseFloat(e.target.value);
-    value = isNaN(value) || value === 0 ? '' : Math.abs(value);
+    value = isNaN(value) || value === 0 ? "" : Math.abs(value);
     this.setState({
       data: { ...this.state.data, [e.target.name]: value },
-      errors: { ...this.state.errors, [e.target.name]: '' },
+      errors: { ...this.state.errors, [e.target.name]: "" },
     });
   };
 
   validate(data) {
     const errors = {};
-    if (!data.title) errors.title = 'title cannot be blank';
-    if (!data.img) errors.img = 'img cannot be blank';
-    if (!data.description) errors.description = 'description cannot be blank';
-    if (!data.director) errors.director = 'director cannot be blank';
-    if (!data.duration) errors.duration = 'duration cannot be blank';
-    if (!data.price) errors.price = 'price cannot be blank';
+    if (!data.title) errors.title = "title cannot be blank";
+    if (!data.img) errors.img = "img cannot be blank";
+    if (!data.description) errors.description = "description cannot be blank";
+    if (!data.director) errors.director = "director cannot be blank";
+    if (!data.duration) errors.duration = "duration cannot be blank";
+    if (!data.price) errors.price = "price cannot be blank";
 
-    if (parseFloat(data.price) <= 0) errors.price = 'error price';
-    if (parseInt(data.duration) <= 0) errors.duration = 'error price';
+    if (parseFloat(data.price) <= 0) errors.price = "error price";
+    if (parseInt(data.duration) <= 0) errors.duration = "error price";
     return errors;
   }
 
@@ -110,7 +110,7 @@ class FilmForm extends Component {
             <div className="ten wide column">
               {/*  START title */}
 
-              <div className={`field ${errors.title ? 'error' : ''}`}>
+              <div className={`field ${errors.title ? "error" : ""}`}>
                 <label htmlFor="title">Film title</label>
                 <input
                   value={data.title}
@@ -124,7 +124,7 @@ class FilmForm extends Component {
               </div>
               {/*  END title */}
               {/* START image */}
-              <div className={`field img-grid ${errors.img ? 'error' : ''}`}>
+              <div className={`field img-grid ${errors.img ? "error" : ""}`}>
                 <label htmlFor="img">Image</label>
                 <input
                   value={data.img}
@@ -161,7 +161,7 @@ class FilmForm extends Component {
 
           {/* START description */}
           <div
-            className={`column row field ${errors.description ? 'error' : ''}`}
+            className={`column row field ${errors.description ? "error" : ""}`}
           >
             <label htmlFor="description">Film description</label>
             <textarea
@@ -179,7 +179,7 @@ class FilmForm extends Component {
           <div className="three column row">
             {/* START director */}
 
-            <div className={`column field  ${errors.director ? 'error' : ''}`}>
+            <div className={`column field  ${errors.director ? "error" : ""}`}>
               <label htmlFor="director">Director</label>
               <input
                 value={data.director}
@@ -194,7 +194,7 @@ class FilmForm extends Component {
             {/* END director */}
             {/* START duration */}
 
-            <div className={`column field  ${errors.duration ? 'error' : ''}`}>
+            <div className={`column field  ${errors.duration ? "error" : ""}`}>
               <label htmlFor="duration">Duration</label>
               <input
                 value={data.duration}
@@ -208,7 +208,7 @@ class FilmForm extends Component {
             </div>
             {/* END duration */}
             {/* START price */}
-            <div className={`column field  ${errors.price ? 'error' : ''}`}>
+            <div className={`column field  ${errors.price ? "error" : ""}`}>
               <label htmlFor="price">Price</label>
               <input
                 value={data.price}
