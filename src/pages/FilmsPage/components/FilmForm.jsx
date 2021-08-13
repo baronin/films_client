@@ -57,11 +57,16 @@ class FilmForm extends Component {
   };
 
   onChangeMultiSelect = ({ target }) => {
-    const { value } = target;
-    console.log(value);
-    // this.setState({
-    //   multiple: { ...this.state.multiple, value },
-    // });
+    const options = target.options;
+    const allVal = [...options].filter((v) => v.selected).map((t) => t.value);
+
+    const value = [];
+    for (let i = 0, l = options.length; i < l; i++) {
+      if (options[i].selected) {
+        value.push(options[i].value);
+      }
+    }
+    this.setState({ multiple: [...allVal] });
   };
 
   render() {
@@ -233,7 +238,7 @@ class FilmForm extends Component {
             <label htmlFor="tags">
               Choose a tag:
               {this.state.multiple &&
-                this.state.multiple.map((v) => <i>{v}</i>)}
+                this.state.multiple.map((v, i) => <i key={i}>{v}</i>)}
             </label>
             <select
               id="tags"
