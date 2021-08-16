@@ -1,7 +1,7 @@
-import React, { Component, createRef } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
-import ImageLoader from "components/ImageLoader";
 import FormMessage from "components/FormMessage";
+import UploadImage from "components/UploadImage";
 
 const initialData = {
   _id: null,
@@ -17,11 +17,8 @@ const initialData = {
 class FilmForm extends Component {
   state = {
     data: initialData,
-    photo: "",
     errors: {},
   };
-
-  photoRef = createRef();
 
   componentDidMount() {
     if (this.props.film._id) {
@@ -50,15 +47,11 @@ class FilmForm extends Component {
     }
   }
  */
-  updatePhoto = (e) => {
-    const file = this.photoRef.current.files && this.photoRef.current.files[0];
-    if (file) {
-      const img = "/img/" + file.name;
-      this.setState({
-        data: { ...this.state.data, img },
-        errors: { ...this.state.errors, img: "" },
-      });
-    }
+  updatePhoto = (img) => {
+    this.setState({
+      data: { ...this.state.data, img },
+      errors: { ...this.state.errors, img: "" },
+    });
   };
 
   handleStringChange = (e) =>
@@ -140,15 +133,6 @@ class FilmForm extends Component {
                   name="img"
                 />
                 <FormMessage>{errors.img}</FormMessage>
-                <div className="inp-file">
-                  <label htmlFor="photo">Photo</label>
-                  <input
-                    ref={this.photoRef}
-                    onChange={this.updatePhoto}
-                    type="file"
-                    id="photo"
-                  />
-                </div>
               </div>
               {/* END image */}
             </div>
@@ -156,12 +140,7 @@ class FilmForm extends Component {
 
             {/* START right */}
             <div className="six wide column">
-              <ImageLoader
-                src={data.img}
-                alt={data.title}
-                fallbackImg="http://via.placeholder.com/250x250"
-                className="ui image imgfit"
-              />
+              <UploadImage img={data.img} updatePhoto={this.updatePhoto} />
             </div>
             {/* END right */}
           </div>
