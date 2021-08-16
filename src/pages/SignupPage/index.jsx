@@ -8,6 +8,7 @@ const SignupPage = (props) => {
 
   const submit = (user) =>
     api.users.create(user).then(() => {
+      props.setMessage("User has been created");
       history.push("/login");
     });
 
