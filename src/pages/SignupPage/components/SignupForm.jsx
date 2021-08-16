@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Link } from "react-router-dom";
 import isEmail from "validator/lib/isEmail";
+import equals from "validator/lib/equals";
 import FormMessage from "components/FormMessage";
 
 const initialData = {
@@ -25,9 +26,9 @@ class SignupForm extends Component {
     const errors = {};
     if (!isEmail(data.email)) errors.email = "Wrong email";
     if (!data.password) errors.password = "Password cannot be blank";
-    
-    if (!data.passwordConfirmation)
-      errors.passwordConfirmation = "Password confirmation cannot be blank";
+
+    if (!equals(data.password, data.passwordConfirmation))
+      errors.password = "Password is not equals confirmation";
     return errors;
   }
 
