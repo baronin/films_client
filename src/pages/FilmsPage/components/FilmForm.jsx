@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import FormMessage from "components/FormMessage";
 import UploadImage from "components/UploadImage";
 
@@ -240,9 +241,9 @@ class FilmForm extends Component {
               Save
             </button>
             <div className="or"></div>
-            <span onClick={this.props.hideForm} className="ui button">
+            <Link to="/films" className="ui button">
               Hide form
-            </span>
+            </Link>
           </div>
           {/* END buttons */}
         </div>
@@ -253,7 +254,6 @@ class FilmForm extends Component {
 }
 
 FilmForm.propTypes = {
-  hideForm: PropTypes.func.isRequired,
   saveFilm: PropTypes.func.isRequired,
   film: PropTypes.object,
 };
