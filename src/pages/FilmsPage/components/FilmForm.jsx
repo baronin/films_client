@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import FormMessage from "components/FormMessage";
 import UploadImage from "components/UploadImage";
 
@@ -20,6 +20,7 @@ class FilmForm extends Component {
     data: initialData,
     errors: {},
     loading: false,
+    redirect: false,
   };
 
   componentDidMount() {
@@ -96,23 +97,27 @@ class FilmForm extends Component {
     this.setState({ errors });
     if (Object.keys(errors).length === 0) {
       this.setState({ loading: true });
-      this.props.saveFilm(this.state.data).catch((err) =>
-        this.setState({
-          errors: err.response.data.errors,
-          loading: false,
-        })
-      );
+      this.props
+        .saveFilm(this.state.data)
+        .then(() => this.setState({ redirect: true }))
+        .catch((err) =>
+          this.setState({
+            errors: err.response.data.errors,
+            loading: false,
+          })
+        );
     }
   };
 
   render() {
-    const { data, errors, loading } = this.state;
+    const { data, errors, loading, redirect } = this.state;
     return (
       <form
         onSubmit={this.handleSubmit}
         aria-label="film-form"
         className={`ui form ${loading && "loading"}`}
       >
+        {redirect && <Redirect to="/films" />}
         <div className="ui grid mb-3">
           {/*  START two column */}
 
