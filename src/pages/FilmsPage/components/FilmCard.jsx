@@ -1,9 +1,18 @@
-import { memo } from "react";
+import { memo, useContext } from "react";
 import PropTypes from "prop-types";
 import Featured from "components/Featured";
 import FilmCardButtons from "pages/FilmsPage/components/FilmCardButtons";
+import UserContext from "contexts/UserContext";
 
 const FilmCard = ({ film }) => {
+  const { user } = useContext(UserContext);
+
+  const actionUser = (
+    <div className="extra content">
+      <button className="ui negative basic button">Show Film</button>
+    </div>
+  );
+
   return (
     <div className="ui card">
       <Featured film={film} />
@@ -21,7 +30,9 @@ const FilmCard = ({ film }) => {
           </span>
         </div>
       </div>
-      <FilmCardButtons film={film} />
+
+      {user.token && user.role === "admin" && <FilmCardButtons film={film} />}
+      {user.token && user.role === "user" && actionUser}
     </div>
   );
 };

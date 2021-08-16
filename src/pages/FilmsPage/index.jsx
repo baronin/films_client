@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { Route, withRouter } from "react-router-dom";
+import { Route, withRouter, Redirect } from "react-router-dom";
 import { prop, sortWith, ascend, descend } from "ramda";
 import _find from "lodash/find";
 import FilmsList from "pages/FilmsPage/components/FilmsList";
@@ -7,6 +7,7 @@ import FilmContext from "contexts/FilmContext";
 import FilmForm from "pages/FilmsPage/components/FilmForm";
 import api from "api";
 import { FullSpinner } from "styles/app";
+import UserContext from "contexts/UserContext";
 
 class FilmPage extends Component {
   state = {
@@ -67,20 +68,28 @@ class FilmPage extends Component {
     return (
       <FilmContext.Provider value={this.value}>
         <div className="ui stackable grid">
-          <div className="six wide column">
-            <Route path="/films/new">
-              <FilmForm film={{}} saveFilm={this.saveFilm} />
-            </Route>
-            <Route
-              path="/films/edit/:_id"
-              render={({ match }) => (
-                <FilmForm
-                  saveFilm={this.saveFilm}
-                  film={_find(films, { _id: match.params._id }) || {}}
-                />
-              )}
-            />
-          </div>
+          <UserContext.Consumer>
+            {({ user }) =>
+              user.token && user.role === "admin" ? (
+                <div className="six wide column">
+                  <Route path="/films/new">
+                    <FilmForm film={{}} saveFilm={this.saveFilm} />
+                  </Route>
+                  <Route
+                    path="/films/edit/:_id"
+                    render={({ match }) => (
+                      <FilmForm
+                        saveFilm={this.saveFilm}
+                        film={_find(films, { _id: match.params._id }) || {}}
+                      />
+                    )}
+                  />
+                </div>
+              ) : (
+                <Redirect to="/films" />
+              )
+            }
+          </UserContext.Consumer>
 
           <div className={`${cols} wide column`}>
             {loading ? <FullSpinner /> : <FilmsList films={films} />}
