@@ -25,9 +25,9 @@ const TopNavigation = ({ isAuth, logout }) => {
             <NavLink to="/signup" className="item">
               <i className="icon sign-in" /> Signup
             </NavLink>
-            <a to="/login" className="item">
+            <NavLink to="/login" className="item">
               <i className="icon user" /> Login
-            </a>
+            </NavLink>
           </>
         )}
       </div>
