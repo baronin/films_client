@@ -1,16 +1,19 @@
 import { Component } from "react";
 import { prop, sortWith, ascend, descend } from "ramda";
+import _find from "lodash/find";
 import FilmsList from "pages/FilmsPage/components/FilmsList";
 import FilmContext from "contexts/FilmContext";
 import FilmForm from "pages/FilmsPage/components/FilmForm";
 import TopNavigation from "components/TopNavigation";
 import api from "api";
+import { FullSpinner } from "styles/app";
 
 class App extends Component {
   state = {
     films: [],
     showAddForm: false,
     selectedFilm: {},
+    loading: true,
   };
   showForm = (e) => this.setState({ showAddForm: true, selectedFilm: {} });
   hideForm = (e) => this.setState({ showAddForm: false, selectedFilm: {} });
@@ -19,17 +22,18 @@ class App extends Component {
     sortWith([descend(prop("featured")), ascend(prop("title"))], films);
 
   componentDidMount() {
-    api.films
-      .fetchAll()
-      .then((films) => this.setState({ films: this.sortFilms(films) }));
+    api.films.fetchAll().then((films) =>
+      this.setState({
+        films: this.sortFilms(films),
+        loading: false,
+      })
+    );
   }
 
-  toggleFeatured = (id) =>
-    this.setState(({ films }) => ({
-      films: this.sortFilms(
-        films.map((f) => (f._id === id ? { ...f, featured: !f.featured } : f))
-      ),
-    }));
+  toggleFeatured = (_id) => {
+    const film = _find(this.state.films, { _id });
+    return this.updateFilm({ ...film, featured: !film.featured });
+  };
 
   selectedFilmForEdit = (selectedFilm) =>
     this.setState({
@@ -60,11 +64,13 @@ class App extends Component {
   saveFilm = (film) => (film._id ? this.updateFilm(film) : this.addFilm(film));
 
   deleteFilm = (film) =>
-    this.setState(({ films, selectedFilm, showAddForm }) => ({
-      films: this.sortFilms(films.filter((f) => f._id !== film._id)),
-      showAddForm: false,
-      selectedFilm: {},
-    }));
+    api.films.delete(film).then(() =>
+      this.setState(({ films, selectedFilm, showAddForm }) => ({
+        films: this.sortFilms(films.filter((f) => f._id !== film._id)),
+        showAddForm: false,
+        selectedFilm: {},
+      }))
+    );
 
   value = {
     toggleFeatured: this.toggleFeatured,
@@ -73,7 +79,7 @@ class App extends Component {
   };
 
   render() {
-    const { films, showAddForm, selectedFilm } = this.state;
+    const { films, showAddForm, selectedFilm, loading } = this.state;
     const cols = showAddForm ? "ten" : "sixteen";
     return (
       <FilmContext.Provider value={this.value}>
@@ -90,7 +96,7 @@ class App extends Component {
               </div>
             )}
             <div className={`${cols} wide column`}>
-              <FilmsList films={films} />
+              {loading ? <FullSpinner /> : <FilmsList films={films} />}
             </div>
           </div>
         </div>
