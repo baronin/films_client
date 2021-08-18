@@ -1,4 +1,5 @@
 import { memo, useContext } from "react";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import Featured from "components/Featured";
 import FilmCardButtons from "pages/FilmsPage/components/FilmCardButtons";
@@ -22,7 +23,9 @@ const FilmCard = ({ film }) => {
       </div>
 
       <div className="content">
-        <span className="header">{film.title}</span>
+        <Link to={`/film/${film._id}`}>
+          <span className="header">{film.title}</span>  
+        </Link>
         <div className="meta">
           <i className="icon users"></i> {film.director}
           <span className="right floated">

@@ -6,6 +6,7 @@ import HomePage from "pages/HomePage";
 import { FullSpinner } from "styles/app";
 import { setAuthorizationHeader } from "api";
 import UserContext from "contexts/UserContext";
+import FilmDetails from 'pages/FilmsPage/components/FilmDetails';
 
 const FilmsPage = lazy(() => import("pages/FilmsPage"));
 const SignupPage = lazy(() => import("pages/SignupPage"));
@@ -79,6 +80,9 @@ class App extends Component {
           </Route>
           <Route path="/login">
             <LoginPage login={this.login} />
+          </Route>
+          <Route path="/film/:id">
+            <FilmDetails />
           </Route>
         </div>
       </Suspense>

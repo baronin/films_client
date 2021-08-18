@@ -32,6 +32,12 @@ class FilmPage extends Component {
     return this.updateFilm({ ...film, featured: !film.featured });
   };
 
+
+  film = (_id) => {
+    const film = _find(this.state.films, { _id });
+    return film;
+  }
+
   addFilm = (film) =>
     api.films.create(film).then((film) =>
       this.setState(({ films }) => ({
